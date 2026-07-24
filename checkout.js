@@ -68,6 +68,6 @@ document
 
     alert("✅ Order Placed Successfully!");
 
-    window.location.href = "index.html";
+    window.location.href="success.html";
 
 });
