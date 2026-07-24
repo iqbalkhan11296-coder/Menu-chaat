@@ -24,28 +24,36 @@ let html=`
 
 `;
 
-order.items.forEach(item=>{
+data.forEach(order => {
 
-html+=`<li>${item.name} × ${item.quantity}</li>`;
+html += `
+<div>
+
+<h3>Order #${order.id}</h3>
+
+<p>Name: ${order.customer_name}</p>
+<p>Table: ${order.table_number}</p>
+
+<h4>Items:</h4>
+`;
+
+order.items.forEach(item => {
+
+html += `
+<p>
+${item.name} × ${item.quantity} 
+= ₹${item.price * item.quantity}
+</p>
+`;
 
 });
 
-html+=`
 
-</ul>
+html += `
+<p><b>Total: ₹${order.total}</b></p>
 
-<h2>Total ₹${order.total}</h2>
-
-<div class="status">
-
-Preparing
-
+<hr>
 </div>
-
-</div>
-
 `;
 
-ordersDiv.innerHTML=html;
-
-}
+});
