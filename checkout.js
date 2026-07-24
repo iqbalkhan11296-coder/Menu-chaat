@@ -8,11 +8,10 @@ const summaryTotal = document.getElementById("summary-total");
 function loadOrder() {
 
     let total = 0;
+    summaryItems.innerHTML = "";
 
     if (cart.length === 0) {
-
         summaryItems.innerHTML = "<p>Your cart is empty.</p>";
-
         return;
     }
 
@@ -30,47 +29,70 @@ function loadOrder() {
     });
 
     summaryTotal.innerText = total;
-
 }
 
 loadOrder();
 
+
 // Submit Order
 async function placeOrder() {
 
-    const customer_name = document.getElementById("customerName").value;
-    const phone = document.getElementById("phone").value;
-    const table_number = document.getElementById("tableNumber").value;
-    const notes = document.getElementById("notes").value;
+    const customer_name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const table_number = document.getElementById("tableNumber").value.trim();
+    const notes = document.getElementById("notes").value.trim();
 
-    const items = JSON.parse(localStorage.getItem("cart")) || [];
-    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-    // Rest of your code...
-}try {
-
-    const { data, error } = await supabase
-        .from("orders")
-        .insert([{
-            customer_name,
-            phone,
-            table_number,
-            notes,
-            items,
-            total,
-            status: "New"
-        }])
-        .select();
-
-    if (error) {
-        alert(error.message);
+    if (!customer_name || !phone) {
+        alert("Please enter customer name and phone number.");
         return;
     }
 
-    alert("Success");
-    localStorage.removeItem("cart");
-    window.location.href = "success.html";
+    const items = JSON.parse(localStorage.getItem("cart")) || [];
 
-} catch (e) {
-    alert("JavaScript Error: " + e.message);
+    if (items.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    const total = items.reduce(
+        (sum, item) => sum + (item.price * item.quantity),
+        0
+    );
+
+    try {
+
+        const { data, error } = await supabase
+            .from("orders")
+            .insert([
+                {
+                    customer_name,
+                    phone,
+                    table_number,
+                    notes,
+                    items,
+                    total,
+                    status: "New"
+                }
+            ])
+            .select();
+
+        console.log(data);
+        console.log(error);
+
+        if (error) {
+            alert("Order failed: " + error.message);
+            return;
+        }
+
+        localStorage.removeItem("cart");
+
+        window.location.href = "success.html";
+
+    } catch (err) {
+
+        alert("JavaScript Error: " + err.message);
+        console.error(err);
+
+    }
+
 }
