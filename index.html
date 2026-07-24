@@ -1,51 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chaatarra | The House of Chaats</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>Chaatarra | The House of Chaats</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-    <h1>CHAATARRA</h1>
-    <p>The House of Chaats</p>
 
-    <button id="cart-btn">
-        🛒 Cart (<span id="cart-count">0</span>)
-    </button>
+<h1>CHAATARRA</h1>
+
+<p>The House of Chaats</p>
+
+<button id="cart-btn">
+🛒 Cart (<span id="cart-count">0</span>)
+</button>
+
 </header>
 
 <section class="menu">
 
-    <div class="card">
-        <h2>Pani Puri</h2>
-        <p>₹45</p>
-        <button onclick="addToCart('Pani Puri',45)">
-            Add to Cart
-        </button>
-    </div>
+<div class="card">
+<h2>Pani Puri</h2>
+<p>₹45</p>
+<button onclick="addToCart('Pani Puri',45)">Add to Cart</button>
+</div>
 
-    <div class="card">
-        <h2>Masala Puri</h2>
-        <p>₹55</p>
-        <button onclick="addToCart('Masala Puri',55)">
-            Add to Cart
-        </button>
-    </div>
+<div class="card">
+<h2>Masala Puri</h2>
+<p>₹55</p>
+<button onclick="addToCart('Masala Puri',55)">Add to Cart</button>
+</div>
 
-    <div class="card">
-        <h2>Samosa Chaat</h2>
-        <p>₹60</p>
-        <button onclick="addToCart('Samosa Chaat',60)">
-            Add to Cart
-        </button>
-    </div>
+<div class="card">
+<h2>Samosa Chaat</h2>
+<p>₹60</p>
+<button onclick="addToCart('Samosa Chaat',60)">Add to Cart</button>
+</div>
 
 </section>
+
+<!-- CART PANEL -->
+
+<div id="cart-panel">
+
+<div class="cart-header">
+
+<h2>Your Cart</h2>
+
+<button id="close-cart">✖</button>
+
+</div>
+
+<div id="cart-items">
+
+<p>Your cart is empty.</p>
+
+</div>
+
+<div class="cart-footer">
+
+<h3>Total : ₹<span id="cart-total">0</span></h3>
+
+<button id="checkout-btn">
+
+Proceed to Checkout
+
+</button>
+
+</div>
+
+</div>
 
 <script src="script.js"></script>
 
