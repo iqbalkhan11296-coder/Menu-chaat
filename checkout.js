@@ -69,14 +69,13 @@ async function placeOrder() {
     window.location.href = "success.html";
 }
 
-    // Temporary storage
-    localStorage.setItem("lastOrder", JSON.stringify(order));
 
-    // Clear cart
-    localStorage.removeItem("cart");
+if (error) {
+    alert("Order failed: " + error.message);
+    return;
+}
 
-    alert("✅ Order Placed Successfully!");
+localStorage.removeItem("cart");
+window.location.href = "success.html";
 
-    window.location.href="success.html";
-
-});
+}
