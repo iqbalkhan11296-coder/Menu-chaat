@@ -1,0 +1,31 @@
+{
+  "chaats": [
+    {
+      "name": "Pani Puri",
+      "price": 45,
+      "image": "images/pani-puri.jpg"
+    },
+    {
+      "name": "Masala Puri",
+      "price": 55,
+      "image": "images/masala-puri.jpg"
+    },
+    {
+      "name": "Samosa Chaat",
+      "price": 60,
+      "image": "images/samosa-chaat.jpg"
+    }
+  ],
+  "coffees": [
+    {
+      "name": "Classic Coffee",
+      "price": 25,
+      "image": "images/classic-coffee.jpg"
+    },
+    {
+      "name": "Vanilla Coffee",
+      "price": 30,
+      "image": "images/vanilla-coffee.jpg"
+    }
+  ]
+}
