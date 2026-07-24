@@ -1,3 +1,6 @@
+if (localStorage.getItem("adminLoggedIn") !== "true") {
+    window.location.href = "login.html";
+}
 const ordersDiv = document.getElementById("orders");
 
 async function loadOrders() {
