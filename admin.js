@@ -24,16 +24,17 @@ async function loadOrders() {
         data.forEach(order => {
 
             html += `
-            <div class="order-card">
-                <h3>${order.customer_name}</h3>
+                <div class="order-card">
 
-                <p><strong>Phone:</strong> ${order.phone}</p>
+                    <h3>${order.customer_name}</h3>
 
-                <p><strong>Table:</strong> ${order.table_number || "-"}</p>
+                    <p><strong>Phone:</strong> ${order.phone}</p>
 
-                <p><strong>Status:</strong> ${order.status}</p>
+                    <p><strong>Table:</strong> ${order.table_number || "-"}</p>
 
-                <h4>Items</h4>
+                    <p><strong>Status:</strong> ${order.status}</p>
+
+                    <h4>Items</h4>
             `;
 
             if (order.items && order.items.length > 0) {
@@ -41,20 +42,26 @@ async function loadOrders() {
                 order.items.forEach(item => {
 
                     html += `
-                    <p>
-                        ${item.name} × ${item.quantity}
-                        = ₹${item.price * item.quantity}
-                    </p>
+                        <p>
+                            ${item.name} × ${item.quantity}
+                            = ₹${item.price * item.quantity}
+                        </p>
                     `;
 
                 });
 
+            } else {
+
+                html += `<p>No items found.</p>`;
+
             }
 
             html += `
-                <p><strong>Total: ₹${order.total}</strong></p>
-                <hr>
-            </div>
+                    <p><strong>Total: ₹${order.total}</strong></p>
+
+                    <hr>
+
+                </div>
             `;
 
         });
@@ -72,4 +79,8 @@ async function loadOrders() {
 
 }
 
+// Load once when page opens
 loadOrders();
+
+// Auto refresh every 2 seconds
+setInterval(loadOrders, 2000);
