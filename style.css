@@ -252,3 +252,26 @@ cursor:pointer;
     outline:none;
 
 }
+.categories{
+display:flex;
+overflow-x:auto;
+gap:10px;
+padding:15px;
+background:white;
+}
+
+.categories button{
+padding:10px 20px;
+border:none;
+border-radius:25px;
+background:#650028;
+color:white;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.categories button.active{
+background:#FFD700;
+color:#650028;
+font-weight:bold;
+}
