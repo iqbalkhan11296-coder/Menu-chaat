@@ -33,7 +33,9 @@ html += `
 
 <p>Name: ${order.customer_name}</p>
 <p>Table: ${order.table_number}</p>
-
+const { data, error } = await supabase
+    .from("orders")
+    .select("*");
 <h4>Items:</h4>
 `;
 
