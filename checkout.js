@@ -36,29 +36,38 @@ function loadOrder() {
 loadOrder();
 
 // Submit Order
-document
-.getElementById("checkout-form")
-.addEventListener("submit", function(e){
+async function placeOrder() {
 
-    e.preventDefault();
+    const customer_name = document.getElementById("customerName").value;
+    const phone = document.getElementById("phone").value;
+    const table_number = document.getElementById("tableNumber").value;
+    const notes = document.getElementById("notes").value;
 
-    const order = {
+    const items = JSON.parse(localStorage.getItem("cart")) || [];
+    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-        customer: document.getElementById("name").value,
+    const { error } = await supabase
+        .from("orders")
+        .insert([
+            {
+                customer_name,
+                phone,
+                table_number,
+                notes,
+                items,
+                total,
+                status: "New"
+            }
+        ]);
 
-        phone: document.getElementById("phone").value,
+    if (error) {
+        alert("Order failed: " + error.message);
+        return;
+    }
 
-        table: document.getElementById("table").value,
-
-        note: document.getElementById("note").value,
-
-        items: cart,
-
-        total: summaryTotal.innerText,
-
-        time: new Date().toLocaleString()
-
-    };
+    localStorage.removeItem("cart");
+    window.location.href = "success.html";
+}
 
     // Temporary storage
     localStorage.setItem("lastOrder", JSON.stringify(order));
