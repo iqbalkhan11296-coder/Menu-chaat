@@ -1,6 +1,6 @@
 // Load Cart
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+console.log(window.db);
 const summaryItems = document.getElementById("summary-items");
 const summaryTotal = document.getElementById("summary-total");
 
@@ -61,20 +61,20 @@ async function placeOrder() {
 
     try {
 
-        const { data, error } = await supabase
-            .from("orders")
-            .insert([
-                {
-                    customer_name,
-                    phone,
-                    table_number,
-                    notes,
-                    items,
-                    total,
-                    status: "New"
-                }
-            ])
-            .select();
+        const { data, error } = await window.db
+    .from("orders")
+    .insert([
+        {
+            customer_name,
+            phone,
+            table_number,
+            notes,
+            items,
+            total,
+            status: "New"
+        }
+    ])
+    .select();
 
         console.log(data);
         console.log(error);
