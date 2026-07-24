@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout | Chaatarra</title>
+
+<link rel="stylesheet" href="checkout.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Checkout</h1>
+
+<form id="checkout-form">
+
+<input
+type="text"
+id="name"
+placeholder="Customer Name"
+required>
+
+<input
+type="tel"
+id="phone"
+placeholder="Phone Number"
+required>
+
+<input
+type="text"
+id="table"
+placeholder="Table Number (Optional)">
+
+<textarea
+id="note"
+placeholder="Special Instructions"></textarea>
+
+<div id="order-summary">
+
+<h2>Your Order</h2>
+
+<div id="summary-items"></div>
+
+<h3>Total ₹<span id="summary-total">0</span></h3>
+
+</div>
+
+<button type="submit">
+
+Place Order
+
+</button>
+
+</form>
+
+</div>
+
+<script src="checkout.js"></script>
+
+</body>
+</html>
