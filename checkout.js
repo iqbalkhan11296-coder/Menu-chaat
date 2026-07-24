@@ -38,6 +38,7 @@ loadOrder();
 // Submit Order
 async function placeOrder() {
 
+    alert("Place Order button is working");
     const customer_name = document.getElementById("customerName").value;
     const phone = document.getElementById("phone").value;
     const table_number = document.getElementById("tableNumber").value;
