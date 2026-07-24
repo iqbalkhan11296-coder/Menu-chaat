@@ -47,19 +47,23 @@ async function placeOrder() {
     const items = JSON.parse(localStorage.getItem("cart")) || [];
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    const { error } = await supabase
-        .from("orders")
-        .insert([
-            {
-                customer_name,
-                phone,
-                table_number,
-                notes,
-                items,
-                total,
-                status: "New"
-            }
-        ]);
+    const { data, error } = await supabase
+    .from("orders")
+    .insert([
+        {
+            customer_name,
+            phone,
+            table_number,
+            notes,
+            items,
+            total,
+            status: "New"
+        }
+    ])
+    .select();
+
+console.log("DATA:", data);
+console.log("ERROR:", error);
 if (error) {
     alert("Order failed: " + error.message);
     return;
