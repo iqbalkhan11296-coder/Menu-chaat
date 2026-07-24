@@ -1,0 +1,123 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#4b001f;
+    color:#fff;
+}
+
+/* Header */
+
+header{
+    background:#650028;
+    padding:25px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    box-shadow:0 3px 10px rgba(0,0,0,.4);
+}
+
+header h1{
+    color:#FFD700;
+    font-size:38px;
+    letter-spacing:3px;
+}
+
+header p{
+    color:#ddd;
+    margin-top:5px;
+}
+
+#cart-btn{
+    margin-top:18px;
+    background:#FFD700;
+    color:#4b001f;
+    border:none;
+    padding:12px 24px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:16px;
+    transition:.3s;
+}
+
+#cart-btn:hover{
+    background:white;
+}
+
+/* Menu */
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+    padding:30px;
+}
+
+/* Cards */
+
+.card{
+    background:#760032;
+    border:2px solid #FFD700;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 10px 20px rgba(0,0,0,.4);
+}
+
+.card h2{
+    color:#FFD700;
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.card button{
+    width:100%;
+    background:#FFD700;
+    color:#4b001f;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.card button:hover{
+    background:white;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+header h1{
+    font-size:28px;
+}
+
+.menu{
+    padding:15px;
+}
+
+.card{
+    padding:18px;
+}
+
+}
