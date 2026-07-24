@@ -201,3 +201,13 @@ cursor:pointer;
 }
 
 }
+.cart-item button{
+    width:30px;
+    height:30px;
+    border:none;
+    background:#650028;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    margin:0 4px;
+}
