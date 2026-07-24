@@ -1,0 +1,13 @@
+{
+  "shopName": "Chaatarra",
+  "tagline": "The House of Chaats",
+  "currency": "₹",
+  "phone": "+91XXXXXXXXXX",
+  "whatsapp": "91XXXXXXXXXX",
+  "address": "Your Shop Address",
+  "openingTime": "10:00 AM",
+  "closingTime": "10:00 PM",
+  "delivery": true,
+  "pickup": true,
+  "tableOrdering": true
+}
