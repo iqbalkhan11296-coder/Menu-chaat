@@ -1,61 +1,75 @@
 const ordersDiv = document.getElementById("orders");
 
-const order = JSON.parse(localStorage.getItem("lastOrder"));
+async function loadOrders() {
 
-if(!order){
+    try {
 
-ordersDiv.innerHTML="<p>No Orders Yet.</p>";
+        const { data, error } = await window.db
+            .from("orders")
+            .select("*")
+            .order("created_at", { ascending: false });
 
-}else{
+        if (error) {
+            ordersDiv.innerHTML = "<p>Error: " + error.message + "</p>";
+            return;
+        }
 
-let html=`
+        if (!data || data.length === 0) {
+            ordersDiv.innerHTML = "<p>No customer orders yet.</p>";
+            return;
+        }
 
-<div class="order">
+        let html = "";
 
-<h3>${order.customer}</h3>
+        data.forEach(order => {
 
-<p><strong>Phone:</strong> ${order.phone}</p>
+            html += `
+            <div class="order-card">
+                <h3>${order.customer_name}</h3>
 
-<p><strong>Table:</strong> ${order.table}</p>
+                <p><strong>Phone:</strong> ${order.phone}</p>
 
-<p><strong>Time:</strong> ${order.time}</p>
+                <p><strong>Table:</strong> ${order.table_number || "-"}</p>
 
-<ul>
+                <p><strong>Status:</strong> ${order.status}</p>
 
-`;
+                <h4>Items</h4>
+            `;
 
-data.forEach(order => {
+            if (order.items && order.items.length > 0) {
 
-html += `
-<div>
+                order.items.forEach(item => {
 
-<h3>Order #${order.id}</h3>
+                    html += `
+                    <p>
+                        ${item.name} × ${item.quantity}
+                        = ₹${item.price * item.quantity}
+                    </p>
+                    `;
 
-<p>Name: ${order.customer_name}</p>
-<p>Table: ${order.table_number}</p>
-const { data, error } = await supabase
-    .from("orders")
-    .select("*");
-<h4>Items:</h4>
-`;
+                });
 
-order.items.forEach(item => {
+            }
 
-html += `
-<p>
-${item.name} × ${item.quantity} 
-= ₹${item.price * item.quantity}
-</p>
-`;
+            html += `
+                <p><strong>Total: ₹${order.total}</strong></p>
+                <hr>
+            </div>
+            `;
 
-});
+        });
 
+        ordersDiv.innerHTML = html;
 
-html += `
-<p><b>Total: ₹${order.total}</b></p>
+    } catch (err) {
 
-<hr>
-</div>
-`;
+        ordersDiv.innerHTML =
+            "<p>JavaScript Error: " + err.message + "</p>";
 
-});
+        console.error(err);
+
+    }
+
+}
+
+loadOrders();
