@@ -21,7 +21,7 @@
 
 <input
 type="text"
-id="name"
+id="customername"
 placeholder="Customer Name"
 required>
 
@@ -33,11 +33,11 @@ required>
 
 <input
 type="text"
-id="table"
+id="tableNumber"
 placeholder="Table Number (Optional)">
 
 <textarea
-id="note"
+id="notes"
 placeholder="Special Instructions"></textarea>
 
 <div id="order-summary">
@@ -49,11 +49,8 @@ placeholder="Special Instructions"></textarea>
 <h3>Total ₹<span id="summary-total">0</span></h3>
 
 </div>
-
-<button type="submit">
-
-Place Order
-
+<button type="button" onclick="placeOrder()">
+    Place Order
 </button>
 
 </form>
