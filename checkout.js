@@ -79,14 +79,15 @@ async function placeOrder() {
         console.log(data);
         console.log(error);
 
-        if (error) {
-            alert("Order failed: " + error.message);
-            return;
-        }
+        alert("Data: " + JSON.stringify(data));
+alert("Error: " + JSON.stringify(error));
 
-        localStorage.removeItem("cart");
+if (error) {
+    return;
+}
 
-        window.location.href = "success.html";
+localStorage.removeItem("cart");
+window.location.href = "success.html";
 
     } catch (err) {
 
