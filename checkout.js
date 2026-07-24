@@ -47,12 +47,11 @@ async function placeOrder() {
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     // Rest of your code...
-}
+}try {
 
     const { data, error } = await supabase
-    .from("orders")
-    .insert([
-        {
+        .from("orders")
+        .insert([{
             customer_name,
             phone,
             table_number,
@@ -60,18 +59,18 @@ async function placeOrder() {
             items,
             total,
             status: "New"
-        }
-    ])
-    .select();
+        }])
+        .select();
 
-console.log("DATA:", data);
-console.log("ERROR:", error);
-if (error) {
-    alert("Order failed: " + error.message);
-    return;
-}
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
-localStorage.removeItem("cart");
-window.location.href = "success.html";
+    alert("Success");
+    localStorage.removeItem("cart");
+    window.location.href = "success.html";
 
+} catch (e) {
+    alert("JavaScript Error: " + e.message);
 }
