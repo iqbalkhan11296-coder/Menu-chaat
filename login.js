@@ -1,21 +1,88 @@
-document
-.getElementById("login-form")
-.addEventListener("submit",function(e){
+// Check admin login
+if (localStorage.getItem("adminLoggedIn") !== "true") {
+    window.location.href = "login.html";
+}
 
-e.preventDefault();
+const ordersDiv = document.getElementById("orders");
 
-const password=document
-.getElementById("password")
-.value;
+async function loadOrders() {
 
-if(password==="chaatarra123"){
+    try {
 
-window.location.href="admin.html";
+        const { data, error } = await window.db
+            .from("orders")
+            .select("*")
+            .order("created_at", { ascending: false });
 
-}else{
+        if (error) {
+            ordersDiv.innerHTML = "<p>Error: " + error.message + "</p>";
+            return;
+        }
 
-alert("Wrong Password");
+        if (!data || data.length === 0) {
+            ordersDiv.innerHTML = "<p>No customer orders yet.</p>";
+            return;
+        }
+
+        let html = "";
+
+        data.forEach(order => {
+
+            html += `
+            <div class="order-card">
+
+                <h3>${order.customer_name}</h3>
+
+                <p><strong>Phone:</strong> ${order.phone}</p>
+
+                <p><strong>Table:</strong> ${order.table_number || "-"}</p>
+
+                <p><strong>Status:</strong> ${order.status}</p>
+
+                <h4>Items</h4>
+            `;
+
+            if (order.items && order.items.length > 0) {
+
+                order.items.forEach(item => {
+
+                    html += `
+                    <p>
+                        ${item.name} × ${item.quantity}
+                        = ₹${item.price * item.quantity}
+                    </p>
+                    `;
+
+                });
+
+            } else {
+
+                html += `<p>No items.</p>`;
+
+            }
+
+            html += `
+                <p><strong>Total: ₹${order.total}</strong></p>
+                <hr>
+
+            </div>
+            `;
+
+        });
+
+        ordersDiv.innerHTML = html;
+
+    } catch (err) {
+
+        ordersDiv.innerHTML = "<p>JavaScript Error: " + err.message + "</p>";
+        console.error(err);
+
+    }
 
 }
 
-});
+// Load orders
+loadOrders();
+
+// Refresh every 2 seconds
+setInterval(loadOrders, 2000);
