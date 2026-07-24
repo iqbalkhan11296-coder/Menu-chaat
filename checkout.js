@@ -59,17 +59,6 @@ async function placeOrder() {
                 status: "New"
             }
         ]);
-
-    if (error) {
-        alert("Order failed: " + error.message);
-        return;
-    }
-
-    localStorage.removeItem("cart");
-    window.location.href = "success.html";
-}
-
-
 if (error) {
     alert("Order failed: " + error.message);
     return;
