@@ -100,15 +100,8 @@ closeCart.onclick = function() {
 
 // Checkout
 document.getElementById("checkout-btn").onclick = function(){
-
-    if(cart.length===0){
-        alert("Your cart is empty.");
-        return;
-    }
-
-    alert("Checkout page will be created next.");
-
-}
+    window.location.href = "checkout.html";
+};
 
 renderCart();
 // Search Menu
