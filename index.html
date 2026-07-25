@@ -22,20 +22,142 @@
 </button>
 
 </header>
-<section class="hero">
+<section class="menu">
 
-    <div class="hero-content">
+    <!-- CHAATS -->
 
-        <h2>Welcome to Chaatarra</h2>
+    <div class="card chaats">
+        <img src="images/pani-puri.jpg" alt="Pani Puri">
+        <h2>Pani Puri</h2>
+        <p class="description">Crispy puris served with spicy, tangy mint water and mashed potato filling.</p>
+        <h3>₹45</h3>
+        <button onclick="addToCart('Pani Puri',45)">Add to Cart</button>
+    </div>
 
-        <p>The House of Chaats</p>
+    <div class="card chaats">
+        <img src="images/masala-puri.jpg" alt="Masala Puri">
+        <h2>Masala Puri</h2>
+        <p class="description">Crunchy puris topped with spicy masala, chutneys and fresh onions.</p>
+        <h3>₹55</h3>
+        <button onclick="addToCart('Masala Puri',55)">Add to Cart</button>
+    </div>
 
-        <input
-            type="text"
-            id="search"
-            placeholder="🔍 Search menu..."
-            onkeyup="searchMenu()">
+    <div class="card chaats">
+        <img src="images/samosa-chaat.jpg" alt="Samosa Chaat">
+        <h2>Samosa Chaat</h2>
+        <p class="description">Crispy samosa served with flavorful chutneys, yogurt and crunchy toppings.</p>
+        <h3>₹60</h3>
+        <button onclick="addToCart('Samosa Chaat',60)">Add to Cart</button>
+    </div>
 
+    <!-- COFFEE -->
+
+    <div class="card coffee">
+        <img src="images/classic-coffee.jpg" alt="Classic Coffee">
+        <h2>Classic Coffee</h2>
+        <p class="description">Freshly brewed classic coffee.</p>
+        <h3>₹25</h3>
+        <button onclick="addToCart('Classic Coffee',25)">Add to Cart</button>
+    </div>
+
+    <div class="card coffee">
+        <img src="images/vanilla-coffee.jpg" alt="Vanilla Coffee">
+        <h2>Vanilla Coffee</h2>
+        <p class="description">Smooth coffee blended with vanilla flavour.</p>
+        <h3>₹30</h3>
+        <button onclick="addToCart('Vanilla Coffee',30)">Add to Cart</button>
+    </div>
+
+    <div class="card coffee">
+        <img src="images/butterscotch-coffee.jpg" alt="Butterscotch Coffee">
+        <h2>Butterscotch Coffee</h2>
+        <p class="description">Rich coffee with sweet butterscotch flavour.</p>
+        <h3>₹30</h3>
+        <button onclick="addToCart('Butterscotch Coffee',30)">Add to Cart</button>
+    </div>
+
+    <div class="card coffee">
+        <img src="images/hazelnut-coffee.jpg" alt="Hazelnut Coffee">
+        <h2>Hazelnut Coffee</h2>
+        <p class="description">Creamy coffee infused with hazelnut.</p>
+        <h3>₹30</h3>
+        <button onclick="addToCart('Hazelnut Coffee',30)">Add to Cart</button>
+    </div>
+
+    <div class="card coffee">
+        <img src="images/chocolate-coffee.jpg" alt="Chocolate Coffee">
+        <h2>Chocolate Coffee</h2>
+        <p class="description">Coffee blended with rich chocolate.</p>
+        <h3>₹35</h3>
+        <button onclick="addToCart('Chocolate Coffee',35)">Add to Cart</button>
+    </div>
+
+    <!-- SHAKES -->
+
+    <div class="card shakes">
+        <img src="images/oreo-shake.jpg" alt="Oreo Shake">
+        <h2>Oreo Shake</h2>
+        <p class="description">Creamy milkshake blended with Oreo cookies.</p>
+        <h3>₹70</h3>
+        <button onclick="addToCart('Oreo Shake',70)">Add to Cart</button>
+    </div>
+
+    <div class="card shakes">
+        <img src="images/biscoff-shake.jpg" alt="Lotus Biscoff Shake">
+        <h2>Lotus Biscoff Shake</h2>
+        <p class="description">Premium Lotus Biscoff milkshake.</p>
+        <h3>₹80</h3>
+        <button onclick="addToCart('Lotus Biscoff Shake',80)">Add to Cart</button>
+    </div>
+
+    <div class="card shakes">
+        <img src="images/gulkhand-shake.jpg" alt="Chaatarra Signature Gulkhand Shake">
+        <h2>Chaatarra Signature Gulkhand Shake</h2>
+        <p class="description">Refreshing signature shake with aromatic gulkhand.</p>
+        <h3>₹60</h3>
+        <button onclick="addToCart('Chaatarra Signature Gulkhand Shake',60)">Add to Cart</button>
+    </div>
+
+    <div class="card shakes">
+        <img src="images/snickers-shake.jpg" alt="Snickers Shake">
+        <h2>Snickers Shake</h2>
+        <p class="description">Creamy shake blended with Snickers chocolate.</p>
+        <h3>₹70</h3>
+        <button onclick="addToCart('Snickers Shake',70)">Add to Cart</button>
+    </div>
+
+    <!-- COMBOS -->
+
+    <div class="card combos">
+        <img src="images/combo1.jpg" alt="Pani Puri + Mint Lime">
+        <h2>Pani Puri + Mint Lime</h2>
+        <p class="description">A refreshing combo of crispy pani puri and mint lime.</p>
+        <h3>₹60</h3>
+        <button onclick="addToCart('Pani Puri + Mint Lime',60)">Add to Cart</button>
+    </div>
+
+    <div class="card combos">
+        <img src="images/combo2.jpg" alt="Masala Puri + Mint Lime">
+        <h2>Masala Puri + Mint Lime</h2>
+        <p class="description">Spicy masala puri served with chilled mint lime.</p>
+        <h3>₹70</h3>
+        <button onclick="addToCart('Masala Puri + Mint Lime',70)">Add to Cart</button>
+    </div>
+
+    <div class="card combos">
+        <img src="images/combo3.jpg" alt="Samosa Chaat + Biscoff Shake">
+        <h2>Samosa Chaat + Biscoff Shake</h2>
+        <p class="description">Our signature combo with a creamy Biscoff shake.</p>
+        <h3>₹130</h3>
+        <button onclick="addToCart('Samosa Chaat + Biscoff Shake',130)">Add to Cart</button>
+    </div>
+
+    <div class="card combos">
+        <img src="images/combo4.jpg" alt="Masala Puri + Biscoff Shake">
+        <h2>Masala Puri + Biscoff Shake</h2>
+        <p class="description">Crunchy masala puri paired with a Lotus Biscoff shake.</p>
+        <h3>₹110</h3>
+        <button onclick="addToCart('Masala Puri + Biscoff Shake',110)">Add to Cart</button>
     </div>
 
 </section>
