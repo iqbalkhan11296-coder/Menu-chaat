@@ -1,98 +1,135 @@
-// Load Cart
+// ============================
+// LOAD CART
+// ============================
+
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
-console.log(window.db);
+
 const summaryItems = document.getElementById("summary-items");
 const summaryTotal = document.getElementById("summary-total");
 
-// Display Order
-function loadOrder() {
+// ============================
+// DISPLAY ORDER SUMMARY
+// ============================
+
+function loadOrder(){
 
     let total = 0;
+
     summaryItems.innerHTML = "";
 
-    if (cart.length === 0) {
+    if(cart.length === 0){
+
         summaryItems.innerHTML = "<p>Your cart is empty.</p>";
+        summaryTotal.innerText = "0";
         return;
+
     }
 
-    cart.forEach(item => {
+    cart.forEach(item=>{
 
-        total += item.price * item.quantity;
+        const itemTotal = item.price * item.quantity;
+
+        total += itemTotal;
 
         summaryItems.innerHTML += `
         <div class="summary-item">
             <span>${item.name} × ${item.quantity}</span>
-            <span>₹${item.price * item.quantity}</span>
+            <span>₹${itemTotal}</span>
         </div>
         `;
 
     });
 
     summaryTotal.innerText = total;
+
 }
 
 loadOrder();
 
 
-// Submit Order
-async function placeOrder() {
+// ============================
+// PLACE ORDER
+// ============================
 
-    const customer_name = document.getElementById("customerName").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const table_number = document.getElementById("tableNumber").value.trim();
-    const notes = document.getElementById("notes").value.trim();
+async function placeOrder(){
 
-    if (!customer_name || !phone) {
-        alert("Please enter customer name and phone number.");
+    const customer_name = document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+    const phone = document
+        .getElementById("phone")
+        .value
+        .trim();
+
+    const table_number = document
+        .getElementById("tableNumber")
+        .value
+        .trim();
+
+    const notes = document
+        .getElementById("notes")
+        .value
+        .trim();
+
+    if(customer_name === "" || phone === ""){
+
+        alert("Please enter your name and phone number.");
         return;
+
     }
 
     const items = JSON.parse(localStorage.getItem("cart")) || [];
 
-    if (items.length === 0) {
+    if(items.length === 0){
+
         alert("Your cart is empty.");
         return;
+
     }
 
-    const total = items.reduce(
-        (sum, item) => sum + (item.price * item.quantity),
-        0
-    );
+    const total = items.reduce((sum,item)=>{
 
-    try {
+        return sum + (item.price * item.quantity);
 
-        const { data, error } = await window.db
-    .from("orders")
-    .insert([
-        {
-            customer_name,
-            phone,
-            table_number,
-            notes,
-            items,
-            total,
-            status: "New"
+    },0);
+
+    try{
+
+        const { error } = await window.db
+            .from("orders")
+            .insert([
+                {
+                    customer_name,
+                    phone,
+                    table_number,
+                    notes,
+                    items,
+                    total,
+                    status:"New"
+                }
+            ]);
+
+        if(error){
+
+            alert("Order Failed\n\n" + error.message);
+            console.error(error);
+            return;
+
         }
-    ])
-    .select();
 
-        console.log(data);
-        console.log(error);
+        localStorage.removeItem("cart");
 
-        alert("Data: " + JSON.stringify(data));
-alert("Error: " + JSON.stringify(error));
+        alert("🎉 Order placed successfully!");
 
-if (error) {
-    return;
-}
+        window.location.href = "success.html";
 
-localStorage.removeItem("cart");
-window.location.href = "success.html";
+    }
+    catch(err){
 
-    } catch (err) {
-
-        alert("JavaScript Error: " + err.message);
         console.error(err);
+        alert("JavaScript Error\n\n" + err.message);
 
     }
 
