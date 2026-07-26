@@ -20,159 +20,137 @@
 <button id="cart-btn">
 🛒 Cart (<span id="cart-count">0</span>)
 </button>
-    <section class="menu">
 
-<div class="card chaats">
-    <h3>Pani Puri</h3>
-    <span>₹45</span>
-    <button onclick="addToCart('Pani Puri',45)">+</button>
-</div>
+</header>
 
-<div class="card chaats">
-    <h3>Masala Puri</h3>
-    <span>₹55</span>
-    <button onclick="addToCart('Masala Puri',55)">+</button>
-</div>
+<section class="categories">
 
-<div class="card chaats">
-    <h3>Samosa Chaat</h3>
-    <span>₹60</span>
-    <button onclick="addToCart('Samosa Chaat',60)">+</button>
-</div>
+<button onclick="filterMenu('all')" class="active">All</button>
 
-<div class="card coffee">
-    <h3>Classic Coffee</h3>
-    <span>₹25</span>
-    <button onclick="addToCart('Classic Coffee',25)">+</button>
-</div>
+<button onclick="filterMenu('chaats')">Chaats</button>
 
-<div class="card coffee">
-    <h3>Vanilla Coffee</h3>
-    <span>₹30</span>
-    <button onclick="addToCart('Vanilla Coffee',30)">+</button>
-</div>
+<button onclick="filterMenu('coffee')">Coffee</button>
 
-<div class="card coffee">
-    <h3>Butterscotch Coffee</h3>
-    <span>₹30</span>
-    <button onclick="addToCart('Butterscotch Coffee',30)">+</button>
-</div>
+<button onclick="filterMenu('shakes')">Shakes</button>
 
-<div class="card coffee">
-    <h3>Hazelnut Coffee</h3>
-    <span>₹30</span>
-    <button onclick="addToCart('Hazelnut Coffee',30)">+</button>
-</div>
-
-<div class="card coffee">
-    <h3>Chocolate Coffee</h3>
-    <span>₹35</span>
-    <button onclick="addToCart('Chocolate Coffee',35)">+</button>
-</div>
-
-<div class="card shakes">
-    <h3>Oreo Shake</h3>
-    <span>₹70</span>
-    <button onclick="addToCart('Oreo Shake',70)">+</button>
-</div>
-
-<div class="card shakes">
-    <h3>Lotus Biscoff Shake</h3>
-    <span>₹80</span>
-    <button onclick="addToCart('Lotus Biscoff Shake',80)">+</button>
-</div>
-
-<div class="card shakes">
-    <h3>Gulkhand Shake</h3>
-    <span>₹60</span>
-    <button onclick="addToCart('Gulkhand Shake',60)">+</button>
-</div>
-
-<div class="card shakes">
-    <h3>Snickers Shake</h3>
-    <span>₹70</span>
-    <button onclick="addToCart('Snickers Shake',70)">+</button>
-</div>
-
-<div class="card combos">
-    <h3>Pani Puri + Mint Lime</h3>
-    <span>₹60</span>
-    <button onclick="addToCart('Pani Puri + Mint Lime',60)">+</button>
-</div>
-
-<div class="card combos">
-    <h3>Masala Puri + Mint Lime</h3>
-    <span>₹70</span>
-    <button onclick="addToCart('Masala Puri + Mint Lime',70)">+</button>
-</div>
-
-<div class="card combos">
-    <h3>Samosa Chaat + Biscoff Shake</h3>
-    <span>₹130</span>
-    <button onclick="addToCart('Samosa Chaat + Biscoff Shake',130)">+</button>
-</div>
-
-<div class="card combos">
-    <h3>Masala Puri + Biscoff Shake</h3>
-    <span>₹110</span>
-    <button onclick="addToCart('Masala Puri + Biscoff Shake',110)">+</button>
-</div>
-
-    </section>
+<button onclick="filterMenu('combos')">Combos</button>
 
 </section>
-    <section class="categories">
 
-<button onclick="filterMenu('all')" class="active">
-All
-</button>
+<section class="hero">
 
-<button onclick="filterMenu('chaats')">
-Chaats
-</button>
+<div class="hero-content">
 
-<button onclick="filterMenu('coffee')">
-Coffee
-</button>
+<h2>Welcome to Chaatarra</h2>
 
-<button onclick="filterMenu('shakes')">
-Shakes
-</button>
+<p>The House of Chaats</p>
 
-<button onclick="filterMenu('combos')">
-Combos
-</button>
+<input
+type="text"
+id="search"
+placeholder="🔍 Search menu..."
+onkeyup="searchMenu()">
 
-    </section>
+</div>
+
+</section>
+
 <section class="menu">
 
 <div class="card chaats">
-
-    <img src="images/pani-puri.jpg" alt="Pani Puri">
-
-    <h2>Pani Puri</h2>
-
-    <p class="description">
-        Crispy puris served with spicy and tangy flavored water.
-    </p>
-
-    <h3>₹45</h3>
-
-    <button onclick="addToCart('Pani Puri',45)">
-        Add to Cart
-    </button>
-
-</div>
-<div class="card">
-<h2>Masala Puri</h2>
-<p>₹55</p>
-<button onclick="addToCart('Masala Puri',55)">Add to Cart</button>
+<h3>Pani Puri</h3>
+<span>₹45</span>
+<button onclick="addToCart('Pani Puri',45)">+</button>
 </div>
 
-<div class="card">
-<h2>Samosa Chaat</h2>
-<p>₹60</p>
-<button onclick="addToCart('Samosa Chaat',60)">Add to Cart</button>
+<div class="card chaats">
+<h3>Masala Puri</h3>
+<span>₹55</span>
+<button onclick="addToCart('Masala Puri',55)">+</button>
+</div>
+
+<div class="card chaats">
+<h3>Samosa Chaat</h3>
+<span>₹60</span>
+<button onclick="addToCart('Samosa Chaat',60)">+</button>
+</div>
+
+<div class="card coffee">
+<h3>Classic Coffee</h3>
+<span>₹25</span>
+<button onclick="addToCart('Classic Coffee',25)">+</button>
+</div>
+
+<div class="card coffee">
+<h3>Vanilla Coffee</h3>
+<span>₹30</span>
+<button onclick="addToCart('Vanilla Coffee',30)">+</button>
+</div>
+
+<div class="card coffee">
+<h3>Butterscotch Coffee</h3>
+<span>₹30</span>
+<button onclick="addToCart('Butterscotch Coffee',30)">+</button>
+</div>
+
+<div class="card coffee">
+<h3>Hazelnut Coffee</h3>
+<span>₹30</span>
+<button onclick="addToCart('Hazelnut Coffee',30)">+</button>
+</div>
+
+<div class="card coffee">
+<h3>Chocolate Coffee</h3>
+<span>₹35</span>
+<button onclick="addToCart('Chocolate Coffee',35)">+</button>
+</div>
+
+<div class="card shakes">
+<h3>Oreo Shake</h3>
+<span>₹70</span>
+<button onclick="addToCart('Oreo Shake',70)">+</button>
+</div>
+
+<div class="card shakes">
+<h3>Lotus Biscoff Shake</h3>
+<span>₹80</span>
+<button onclick="addToCart('Lotus Biscoff Shake',80)">+</button>
+</div>
+
+<div class="card shakes">
+<h3>Gulkhand Shake</h3>
+<span>₹60</span>
+<button onclick="addToCart('Gulkhand Shake',60)">+</button>
+</div>
+
+<div class="card shakes">
+<h3>Snickers Shake</h3>
+<span>₹70</span>
+<button onclick="addToCart('Snickers Shake',70)">+</button>
+</div>
+
+<div class="card combos">
+<h3>Pani Puri + Mint Lime</h3>
+<span>₹60</span>
+<button onclick="addToCart('Pani Puri + Mint Lime',60)">+</button>
+</div>
+
+<div class="card combos">
+<h3>Masala Puri + Mint Lime</h3>
+<span>₹70</span>
+<button onclick="addToCart('Masala Puri + Mint Lime',70)">+</button>
+</div>
+
+<div class="card combos">
+<h3>Samosa Chaat + Biscoff Shake</h3>
+<span>₹130</span>
+<button onclick="addToCart('Samosa Chaat + Biscoff Shake',130)">+</button>
+</div>
+
+<div class="card combos">
+<h3>Masala Puri + Biscoff Shake</h3>
+<span>₹110</span>
+<button onclick="addToCart('Masala Puri + Biscoff Shake',110)">+</button>
 </div>
 
 </section>
@@ -197,12 +175,10 @@ Combos
 
 <div class="cart-footer">
 
-<h3>Total : ₹<span id="cart-total">0</span></h3>
+<h3>Total: ₹<span id="cart-total">0</span></h3>
 
 <button id="checkout-btn">
-
 Proceed to Checkout
-
 </button>
 
 </div>
