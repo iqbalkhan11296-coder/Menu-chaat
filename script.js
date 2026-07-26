@@ -7,49 +7,58 @@ const cartItems = document.getElementById("cart-items");
 const cartCount = document.getElementById("cart-count");
 const cartTotal = document.getElementById("cart-total");
 
-// Add item
-function addToCart(name, price) {
+// --------------------
+// Add Item
+// --------------------
+function addToCart(name, price){
 
     let item = cart.find(i => i.name === name);
 
-    if (item) {
+    if(item){
         item.quantity++;
-    } else {
+    }else{
         cart.push({
-            name,
-            price,
-            quantity: 1
+            name:name,
+            price:price,
+            quantity:1
         });
     }
 
     saveCart();
 }
 
-// Save cart
-function saveCart() {
+// --------------------
+// Save Cart
+// --------------------
+function saveCart(){
+
     localStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
+
 }
 
-// Render cart
-function renderCart() {
+// --------------------
+// Render Cart
+// --------------------
+function renderCart(){
 
     cartItems.innerHTML = "";
 
     let total = 0;
     let count = 0;
 
-    if (cart.length === 0) {
-        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    if(cart.length===0){
+        cartItems.innerHTML="<p>Your cart is empty.</p>";
     }
 
-    cart.forEach((item, index) => {
+    cart.forEach((item,index)=>{
 
         total += item.price * item.quantity;
         count += item.quantity;
 
         cartItems.innerHTML += `
         <div class="cart-item">
+
             <div>
                 <h4>${item.name}</h4>
                 <p>₹${item.price}</p>
@@ -62,95 +71,130 @@ function renderCart() {
 
                 <button onclick="increaseQty(${index})">+</button>
             </div>
+
         </div>
         `;
+
     });
 
     cartCount.innerText = count;
     cartTotal.innerText = total;
+
 }
 
-// Increase quantity
-function increaseQty(index) {
+// --------------------
+// Increase Qty
+// --------------------
+function increaseQty(index){
+
     cart[index].quantity++;
     saveCart();
+
 }
 
-// Decrease quantity
-function decreaseQty(index) {
+// --------------------
+// Decrease Qty
+// --------------------
+function decreaseQty(index){
 
     cart[index].quantity--;
 
-    if (cart[index].quantity <= 0) {
+    if(cart[index].quantity<=0){
         cart.splice(index,1);
     }
 
     saveCart();
+
 }
 
-// Open cart
-cartBtn.onclick = function() {
+// --------------------
+// Open Cart
+// --------------------
+cartBtn.addEventListener("click",function(){
+
     cartPanel.classList.add("active");
-}
 
-// Close cart
-closeCart.onclick = function() {
+});
+
+// --------------------
+// Close Cart
+// --------------------
+closeCart.addEventListener("click",function(){
+
     cartPanel.classList.remove("active");
-}
 
+});
+
+// --------------------
 // Checkout
-document.getElementById("checkout-btn").onclick = function(){
-    window.location.href = "checkout.html";
-};
+// --------------------
+document.getElementById("checkout-btn").addEventListener("click",function(){
 
-renderCart();
+    window.location.href="checkout.html";
+
+});
+
+// --------------------
 // Search Menu
-
+// --------------------
 function searchMenu(){
 
-    let input = document
+    let input=document
         .getElementById("search")
         .value
         .toLowerCase();
 
-    let cards = document
-        .querySelectorAll(".card");
+    let cards=document.querySelectorAll(".card");
 
     cards.forEach(card=>{
 
-        let name = card
-            .querySelector("h2")
+        let name=card
+            .querySelector("h3")
             .innerText
             .toLowerCase();
 
-        if(name.includes(input))
-            card.style.display="block";
-        else
+        if(name.includes(input)){
+            card.style.display="flex";
+        }else{
             card.style.display="none";
+        }
 
     });
 
 }
+
+// --------------------
+// Filter Menu
+// --------------------
 function filterMenu(category){
 
-const cards=document.querySelectorAll(".card");
+    const cards=document.querySelectorAll(".card");
 
-cards.forEach(card=>{
+    document.querySelectorAll(".categories button").forEach(btn=>{
+        btn.classList.remove("active");
+    });
 
-if(category==="all"){
+    if(event && event.target){
+        event.target.classList.add("active");
+    }
 
-card.style.display="block";
+    cards.forEach(card=>{
 
-}else if(card.classList.contains(category)){
+        if(category==="all"){
+            card.style.display="flex";
+        }
+        else if(card.classList.contains(category)){
+            card.style.display="flex";
+        }
+        else{
+            card.style.display="none";
+        }
 
-card.style.display="block";
-
-}else{
-
-card.style.display="none";
+    });
 
 }
 
-});
-
-}
+// --------------------
+// Initial Load
+// --------------------
+renderCart();
