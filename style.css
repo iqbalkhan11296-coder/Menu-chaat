@@ -317,9 +317,17 @@ header h1{
 }
 
 #cart-btn{
-    left:10px;
-    right:10px;
-    bottom:10px;
+    margin:15px auto 0;
+    display:block;
+    width:180px;
+    background:#FFD700;
+    color:#4b001f;
+    border:none;
+    padding:10px 15px;
+    border-radius:25px;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
 }
 
 #cart-panel{
