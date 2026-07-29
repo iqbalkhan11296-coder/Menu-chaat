@@ -10,10 +10,14 @@
 
 <link rel="stylesheet" href="kitchen.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Supabase Connection -->
 <script src="js/supabase.js"></script>
 
 </head>
+
 
 <body>
 
@@ -22,31 +26,53 @@
 <h1>🍽️ Chaatarra Kitchen Display</h1>
 
 <div class="top-bar">
-<button onclick="location.reload()">🔄 Refresh</button>
-<button onclick="toggleFullscreen()">📺 Full Screen</button>
+
+<button onclick="location.reload()">
+🔄 Refresh
+</button>
+
+<button onclick="toggleFullscreen()">
+📺 Full Screen
+</button>
+
 </div>
 
 </header>
 
+
 <div id="orders" class="orders"></div>
 
+
 <audio id="newOrderSound" preload="auto">
-    <source src="sounds/new-order.mp3" type="audio/mpeg">
+
+<source src="sounds/new-order.mp3" type="audio/mpeg">
+
 </audio>
 
-<script>
-function toggleFullscreen() {
 
-    if (!document.fullscreenElement) {
+
+<script>
+
+function toggleFullscreen(){
+
+    if(!document.fullscreenElement){
+
         document.documentElement.requestFullscreen();
-    } else {
+
+    }else{
+
         document.exitFullscreen();
+
     }
 
 }
+
 </script>
 
+
+
 <script src="kitchen.js"></script>
+
 
 </body>
 
