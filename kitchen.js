@@ -1,5 +1,6 @@
 const newOrderSound = document.getElementById("newOrderSound");
 let lastOrderCount = 0;
+
 const ordersDiv = document.getElementById("orders");
 
 async function loadOrders() {
@@ -13,6 +14,13 @@ async function loadOrders() {
         console.error(error);
         return;
     }
+
+    // Play notification for new orders
+    if (lastOrderCount > 0 && data.length > lastOrderCount) {
+        newOrderSound.play().catch(err => console.log(err));
+    }
+
+    lastOrderCount = data.length;
 
     ordersDiv.innerHTML = "";
 
@@ -30,6 +38,7 @@ async function loadOrders() {
 
         ordersDiv.innerHTML += `
         <div class="order-card">
+
             <h2>${order.kot_number}</h2>
 
             <p><strong>Customer:</strong> ${order.customer_name}</p>
@@ -46,17 +55,21 @@ async function loadOrders() {
 
             <p><strong>Status:</strong> ${order.status}</p>
 
-            <button class="preparing" onclick="updateStatus(${order.id},'Preparing')">
+            <button class="preparing"
+                onclick="updateStatus(${order.id}, 'Preparing')">
                 Preparing
             </button>
 
-            <button class="ready" onclick="updateStatus(${order.id},'Ready')">
+            <button class="ready"
+                onclick="updateStatus(${order.id}, 'Ready')">
                 Ready
             </button>
 
-            <button class="complete" onclick="updateStatus(${order.id},'Completed')">
+            <button class="complete"
+                onclick="updateStatus(${order.id}, 'Completed')">
                 Completed
             </button>
+
         </div>`;
     });
 }
@@ -70,6 +83,7 @@ async function updateStatus(id, status) {
 
     if (error) {
         console.error(error);
+        return;
     }
 
     loadOrders();
@@ -78,7 +92,7 @@ async function updateStatus(id, status) {
 // Initial load
 loadOrders();
 
-// Auto refresh every 2 seconds
+// Refresh every 2 seconds
 setInterval(loadOrders, 2000);
 
 // Realtime updates
