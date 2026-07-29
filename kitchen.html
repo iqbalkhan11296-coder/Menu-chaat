@@ -10,11 +10,11 @@
 
 <link rel="stylesheet" href="kitchen.css">
 
-<!-- Supabase -->
+<!-- Supabase Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- Supabase Connection -->
-<script src="supabase.js"></script>
+<script src="supabase.js?v=1"></script>
 
 </head>
 
@@ -44,7 +44,9 @@
 
 
 <audio id="newOrderSound" preload="auto">
+
 <source src="sounds/new-order.mp3" type="audio/mpeg">
+
 </audio>
 
 
@@ -68,14 +70,9 @@ function toggleFullscreen(){
 </script>
 
 
-<script>
 
-alert("HTML script area working");
-
-</script>
-
-
-<script src="./kitchen.js?v=10"></script>
+<!-- Kitchen Script -->
+<script src="kitchen.js?v=100"></script>
 
 
 </body>
