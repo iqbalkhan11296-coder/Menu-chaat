@@ -1,7 +1,16 @@
+// ============================
+// ADMIN LOGIN CHECK
+// ============================
+
 if (localStorage.getItem("adminLoggedIn") !== "true") {
     window.location.href = "login.html";
 }
+
 const ordersDiv = document.getElementById("orders");
+
+// ============================
+// LOAD ORDERS
+// ============================
 
 async function loadOrders() {
 
@@ -34,6 +43,8 @@ async function loadOrders() {
                     <p><strong>Phone:</strong> ${order.phone}</p>
 
                     <p><strong>Table:</strong> ${order.table_number || "-"}</p>
+
+                    <p><strong>Special Instructions:</strong> ${order.notes || "-"}</p>
 
                     <p><strong>Status:</strong> ${order.status}</p>
 
@@ -82,8 +93,14 @@ async function loadOrders() {
 
 }
 
-// Load once when page opens
+// ============================
+// INITIAL LOAD
+// ============================
+
 loadOrders();
 
-// Auto refresh every 2 seconds
+// ============================
+// AUTO REFRESH EVERY 2 SECONDS
+// ============================
+
 setInterval(loadOrders, 2000);
