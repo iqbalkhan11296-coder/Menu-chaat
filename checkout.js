@@ -11,13 +11,13 @@ const summaryTotal = document.getElementById("summary-total");
 // DISPLAY ORDER SUMMARY
 // ============================
 
-function loadOrder(){
+function loadOrder() {
 
     let total = 0;
 
     summaryItems.innerHTML = "";
 
-    if(cart.length === 0){
+    if (cart.length === 0) {
 
         summaryItems.innerHTML = "<p>Your cart is empty.</p>";
         summaryTotal.innerText = "0";
@@ -25,7 +25,7 @@ function loadOrder(){
 
     }
 
-    cart.forEach(item=>{
+    cart.forEach(item => {
 
         const itemTotal = item.price * item.quantity;
 
@@ -46,12 +46,11 @@ function loadOrder(){
 
 loadOrder();
 
-
 // ============================
 // PLACE ORDER
 // ============================
 
-async function placeOrder(){
+async function placeOrder() {
 
     const customer_name = document
         .getElementById("customerName")
@@ -73,7 +72,7 @@ async function placeOrder(){
         .value
         .trim();
 
-    if(customer_name === "" || phone === ""){
+    if (customer_name === "" || phone === "") {
 
         alert("Please enter your name and phone number.");
         return;
@@ -82,20 +81,26 @@ async function placeOrder(){
 
     const items = JSON.parse(localStorage.getItem("cart")) || [];
 
-    if(items.length === 0){
+    if (items.length === 0) {
 
         alert("Your cart is empty.");
         return;
 
     }
 
-    const total = items.reduce((sum,item)=>{
+    const total = items.reduce((sum, item) => {
 
         return sum + (item.price * item.quantity);
 
-    },0);
+    }, 0);
 
-    try{
+    const kotNumber = "KOT-" + Date.now();
+
+    try {
+
+        // ============================
+        // SAVE TO ORDERS TABLE
+        // ============================
 
         const { error } = await window.db
             .from("orders")
@@ -107,17 +112,46 @@ async function placeOrder(){
                     notes,
                     items,
                     total,
-                    status:"New"
+                    status: "New"
                 }
             ]);
 
-        if(error){
+        if (error) {
 
             alert("Order Failed\n\n" + error.message);
             console.error(error);
             return;
 
         }
+
+        // ============================
+        // SAVE TO KOT TABLE
+        // ============================
+
+        const { error: kotError } = await window.db
+            .from("kot") // Change to "kots" if needed
+            .insert([
+                {
+                    kot_number: kotNumber,
+                    customer_name,
+                    table_number,
+                    items,
+                    total,
+                    status: "Pending"
+                }
+            ]);
+
+        if (kotError) {
+
+            alert("KOT Failed\n\n" + kotError.message);
+            console.error(kotError);
+            return;
+
+        }
+
+        // ============================
+        // SUCCESS
+        // ============================
 
         localStorage.removeItem("cart");
 
@@ -126,7 +160,7 @@ async function placeOrder(){
         window.location.href = "success.html";
 
     }
-    catch(err){
+    catch (err) {
 
         console.error(err);
         alert("JavaScript Error\n\n" + err.message);
