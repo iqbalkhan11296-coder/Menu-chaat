@@ -1,6 +1,5 @@
 let newOrderSound;
 let ordersDiv;
-let lastOrderCount = 0;
 
 
 // ============================
@@ -18,44 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ============================
-// ORDER TIMER
-// ============================
-
-function getOrderTimer(createdAt) {
-
-    const created = new Date(createdAt);
-    const now = new Date();
-
-    const minutes = Math.floor((now - created) / 60000);
-
-    let color = "#4CAF50";
-
-    if (minutes >= 5) color = "#FFC107";
-    if (minutes >= 10) color = "#F44336";
-
-
-    return `
-    <div style="
-        margin:10px 0;
-        padding:8px;
-        border-radius:8px;
-        background:${color};
-        color:white;
-        text-align:center;
-        font-weight:bold;
-        font-size:18px;
-    ">
-        ⏱ ${minutes} min
-    </div>
-    `;
-}
-
-
-// ============================
 // LOAD ORDERS
 // ============================
 
 async function loadOrders() {
+
 
     const { data, error } = await window.db
         .from("kot")
@@ -63,21 +29,22 @@ async function loadOrders() {
         .order("created_at", { ascending:false });
 
 
+
     if(error){
 
-        console.log("KOT ERROR:", error);
+        alert("KOT ERROR: " + error.message);
         return;
 
     }
 
 
-    console.log("KOT DATA:", data);
 
+    alert("Orders found: " + data.length);
 
-    if(!ordersDiv) return;
 
 
     ordersDiv.innerHTML = "";
+
 
 
     data.forEach(order => {
@@ -85,8 +52,8 @@ async function loadOrders() {
 
         let itemsHTML = "";
 
-        // FIXED: Supabase column is "Items"
         let items = order.Items;
+
 
 
         if(typeof items === "string"){
@@ -95,8 +62,7 @@ async function loadOrders() {
 
                 items = JSON.parse(items);
 
-            }
-            catch{
+            }catch{
 
                 items = [];
 
@@ -107,7 +73,6 @@ async function loadOrders() {
 
 
         if(Array.isArray(items)){
-
 
             items.forEach(item => {
 
@@ -127,77 +92,34 @@ async function loadOrders() {
 
         <div class="order-card">
 
-
         <h2>
-        ${order.kot_number || "KOT"}
+        ${order.kot_number}
         </h2>
 
 
         <p>
-        <strong>Customer:</strong>
-        ${order.customer_name || "-"}
+        Customer: ${order.customer_name}
         </p>
 
 
         <p>
-        <strong>Table:</strong>
-        ${order.table_number || "-"}
+        Table: ${order.table_number || "-"}
         </p>
 
 
-        <p>
-        <strong>Time:</strong>
-        ${order.created_at ? new Date(order.created_at).toLocaleTimeString() : "-"}
-        </p>
-
-
-        ${getOrderTimer(order.created_at)}
-
-
-
-        <div class="items">
-
+        <div>
         ${itemsHTML}
-
         </div>
 
 
-
         <p>
-        <strong>Total:</strong>
-        ₹${order.total || 0}
+        Total: ₹${order.total}
         </p>
 
 
-
         <p>
-        <strong>Status:</strong>
-        ${order.status || "Pending"}
+        Status: ${order.status}
         </p>
-
-
-
-        <button onclick="updateStatus(${order.id},'Preparing')">
-        Preparing
-        </button>
-
-
-
-        <button onclick="updateStatus(${order.id},'Ready')">
-        Ready
-        </button>
-
-
-
-        <button onclick="updateStatus(${order.id},'Completed')">
-        Completed
-        </button>
-
-
-
-        <button onclick="printKOT(${order.id})">
-        🖨️ Print KOT
-        </button>
 
 
         </div>
@@ -211,47 +133,13 @@ async function loadOrders() {
 }
 
 
-// ============================
-// UPDATE STATUS
-// ============================
-
-async function updateStatus(id,status){
-
-
-    const {error}=await window.db
-    .from("kot")
-    .update({status})
-    .eq("id",id);
-
-
-
-    if(error){
-
-        console.log(error);
-        return;
-
-    }
-
-
-    loadOrders();
-
-}
-
-
-
-// ============================
-// AUTO REFRESH
-// ============================
+// Auto refresh
 
 setInterval(loadOrders,2000);
 
-setInterval(loadOrders,60000);
 
 
-
-// ============================
-// REALTIME
-// ============================
+// Realtime
 
 window.db
 .channel("kitchen-orders")
@@ -267,138 +155,3 @@ table:"kot"
 }
 )
 .subscribe();
-
-
-
-
-// ============================
-// PRINT KOT
-// ============================
-
-async function printKOT(id){
-
-
-const {data,error}=await window.db
-.from("kot")
-.select("*")
-.eq("id",id)
-.single();
-
-
-
-if(error){
-
-alert(error.message);
-return;
-
-}
-
-
-
-let items="";
-
-
-// FIXED: Supabase column is "Items"
-let orderItems=data.Items;
-
-
-
-if(typeof orderItems==="string"){
-
-try{
-
-orderItems=JSON.parse(orderItems);
-
-}
-catch{
-
-orderItems=[];
-
-}
-
-}
-
-
-
-if(Array.isArray(orderItems)){
-
-
-orderItems.forEach(item=>{
-
-items += `
-<p>
-${item.name} × ${item.quantity}
-</p>
-`;
-
-});
-
-
-}
-
-
-
-const printWindow=window.open(
-"",
-"",
-"width=400,height=700"
-);
-
-
-
-printWindow.document.write(`
-
-<html>
-
-<body style="font-family:monospace">
-
-<h2 style="text-align:center">
-CHAATARRA
-</h2>
-
-
-<h3 style="text-align:center">
-${data.kot_number}
-</h3>
-
-
-<hr>
-
-
-<p>
-Customer: ${data.customer_name}
-</p>
-
-
-<p>
-Table: ${data.table_number || "-"}
-</p>
-
-
-<hr>
-
-
-${items}
-
-
-<hr>
-
-
-<h3>
-Total: ₹${data.total}
-</h3>
-
-
-</body>
-
-</html>
-
-`);
-
-
-printWindow.document.close();
-
-printWindow.print();
-
-
-}
