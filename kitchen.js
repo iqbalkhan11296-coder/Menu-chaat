@@ -3,10 +3,46 @@ let lastOrderCount = 0;
 
 const ordersDiv = document.getElementById("orders");
 
+// ============================
+// ORDER TIMER
+// ============================
+
+function getOrderTimer(createdAt) {
+
+    const created = new Date(createdAt);
+    const now = new Date();
+
+    const minutes = Math.floor((now - created) / 60000);
+
+    let color = "#4CAF50";
+
+    if (minutes >= 5) color = "#FFC107";
+    if (minutes >= 10) color = "#F44336";
+
+    return `
+        <div style="
+            margin:10px 0;
+            padding:8px;
+            border-radius:8px;
+            background:${color};
+            color:#fff;
+            text-align:center;
+            font-weight:bold;
+            font-size:18px;
+        ">
+            ⏱ ${minutes} min
+        </div>
+    `;
+}
+
+// ============================
+// LOAD ORDERS
+// ============================
+
 async function loadOrders() {
 
     const { data, error } = await window.db
-        .from("kot") // Change to "kots" if your table name is kots
+        .from("kot") // Change to "kots" if needed
         .select("*")
         .order("created_at", { ascending: false });
 
@@ -15,7 +51,7 @@ async function loadOrders() {
         return;
     }
 
-    // Play notification for new orders
+    // Notification sound
     if (lastOrderCount > 0 && data.length > lastOrderCount) {
         newOrderSound.play().catch(err => console.log(err));
     }
@@ -47,6 +83,8 @@ async function loadOrders() {
 
             <p><strong>Time:</strong> ${new Date(order.created_at).toLocaleTimeString()}</p>
 
+            ${getOrderTimer(order.created_at)}
+
             <div class="items">
                 ${itemsHTML}
             </div>
@@ -74,6 +112,10 @@ async function loadOrders() {
     });
 }
 
+// ============================
+// UPDATE STATUS
+// ============================
+
 async function updateStatus(id, status) {
 
     const { error } = await window.db
@@ -89,13 +131,22 @@ async function updateStatus(id, status) {
     loadOrders();
 }
 
-// Initial load
+// ============================
+// INITIAL LOAD
+// ============================
+
 loadOrders();
 
 // Refresh every 2 seconds
 setInterval(loadOrders, 2000);
 
-// Realtime updates
+// Refresh timers every minute
+setInterval(loadOrders, 60000);
+
+// ============================
+// REALTIME
+// ============================
+
 window.db
     .channel("kitchen-orders")
     .on(
