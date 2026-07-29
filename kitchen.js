@@ -48,7 +48,6 @@ function getOrderTimer(createdAt) {
         ⏱ ${minutes} min
     </div>
     `;
-
 }
 
 
@@ -58,12 +57,10 @@ function getOrderTimer(createdAt) {
 
 async function loadOrders() {
 
-
     const { data, error } = await window.db
         .from("kot")
         .select("*")
         .order("created_at", { ascending:false });
-
 
 
     if(error){
@@ -74,17 +71,13 @@ async function loadOrders() {
     }
 
 
-
     console.log("KOT DATA:", data);
-
 
 
     if(!ordersDiv) return;
 
 
-
     ordersDiv.innerHTML = "";
-
 
 
     data.forEach(order => {
@@ -92,8 +85,8 @@ async function loadOrders() {
 
         let itemsHTML = "";
 
-        let items = order.items;
-
+        // FIXED: Supabase column is "Items"
+        let items = order.Items;
 
 
         if(typeof items === "string"){
@@ -118,24 +111,19 @@ async function loadOrders() {
 
             items.forEach(item => {
 
-
                 itemsHTML += `
                 <div>
                 ${item.name} × ${item.quantity}
                 </div>
                 `;
 
-
             });
-
 
         }
 
 
 
-
         ordersDiv.innerHTML += `
-
 
         <div class="order-card">
 
@@ -184,9 +172,8 @@ async function loadOrders() {
 
         <p>
         <strong>Status:</strong>
-        ${order.status || "New"}
+        ${order.status || "Pending"}
         </p>
-
 
 
 
@@ -213,16 +200,12 @@ async function loadOrders() {
         </button>
 
 
-
         </div>
-
 
         `;
 
 
-
     });
-
 
 
 }
@@ -250,9 +233,7 @@ async function updateStatus(id,status){
     }
 
 
-
     loadOrders();
-
 
 }
 
@@ -261,7 +242,6 @@ async function updateStatus(id,status){
 // ============================
 // AUTO REFRESH
 // ============================
-
 
 setInterval(loadOrders,2000);
 
@@ -272,7 +252,6 @@ setInterval(loadOrders,60000);
 // ============================
 // REALTIME
 // ============================
-
 
 window.db
 .channel("kitchen-orders")
@@ -318,7 +297,10 @@ return;
 
 let items="";
 
-let orderItems=data.items;
+
+// FIXED: Supabase column is "Items"
+let orderItems=data.Items;
+
 
 
 if(typeof orderItems==="string"){
@@ -327,7 +309,8 @@ try{
 
 orderItems=JSON.parse(orderItems);
 
-}catch{
+}
+catch{
 
 orderItems=[];
 
@@ -352,7 +335,6 @@ ${item.name} × ${item.quantity}
 
 
 }
-
 
 
 
@@ -412,7 +394,6 @@ Total: ₹${data.total}
 </html>
 
 `);
-
 
 
 printWindow.document.close();
