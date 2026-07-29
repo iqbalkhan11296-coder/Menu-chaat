@@ -1,3 +1,6 @@
+alert("Kitchen JS Connected");
+
+
 let newOrderSound;
 let ordersDiv;
 
@@ -16,11 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
 // ============================
 // LOAD ORDERS
 // ============================
 
-async function loadOrders() {
+async function loadOrders(){
 
 
     const { data, error } = await window.db
@@ -62,7 +66,8 @@ async function loadOrders() {
 
                 items = JSON.parse(items);
 
-            }catch{
+            }
+            catch{
 
                 items = [];
 
@@ -74,15 +79,19 @@ async function loadOrders() {
 
         if(Array.isArray(items)){
 
-            items.forEach(item => {
+
+            items.forEach(item=>{
 
                 itemsHTML += `
-                <div>
+
+                <p>
                 ${item.name} × ${item.quantity}
-                </div>
+                </p>
+
                 `;
 
             });
+
 
         }
 
@@ -90,15 +99,17 @@ async function loadOrders() {
 
         ordersDiv.innerHTML += `
 
+
         <div class="order-card">
 
+
         <h2>
-        ${order.kot_number}
+        ${order.kot_number || "KOT"}
         </h2>
 
 
         <p>
-        Customer: ${order.customer_name}
+        Customer: ${order.customer_name || "-"}
         </p>
 
 
@@ -107,22 +118,26 @@ async function loadOrders() {
         </p>
 
 
-        <div>
+        <p>
+        Items:
+        </p>
+
+
         ${itemsHTML}
-        </div>
 
 
         <p>
-        Total: ₹${order.total}
+        Total: ₹${order.total || 0}
         </p>
 
 
         <p>
-        Status: ${order.status}
+        Status: ${order.status || "Pending"}
         </p>
 
 
         </div>
+
 
         `;
 
@@ -130,16 +145,22 @@ async function loadOrders() {
     });
 
 
+
 }
 
 
-// Auto refresh
 
-setInterval(loadOrders,2000);
+// ============================
+// AUTO REFRESH
+// ============================
+
+setInterval(loadOrders,3000);
 
 
 
-// Realtime
+// ============================
+// REALTIME
+// ============================
 
 window.db
 .channel("kitchen-orders")
