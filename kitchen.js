@@ -1,5 +1,4 @@
-alert("DB status: " + typeof window.db);
-
+alert("Kitchen JS Connected");
 
 let newOrderSound;
 let ordersDiv;
@@ -27,7 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadOrders(){
 
 
-    alert(JSON.stringify(data));
+    const { data, error } = await window.db
+        .from("kot")
+        .select("*")
+        .order("created_at", { ascending:false });
+
 
 
     if(error){
@@ -41,6 +44,12 @@ async function loadOrders(){
 
     alert("Orders found: " + data.length);
 
+    console.log("KOT DATA:", data);
+
+
+
+    if(!ordersDiv) return;
+
 
 
     ordersDiv.innerHTML = "";
@@ -52,7 +61,8 @@ async function loadOrders(){
 
         let itemsHTML = "";
 
-        let items = order.Items;
+
+        let items = order.items || order.Items;
 
 
 
@@ -81,7 +91,7 @@ async function loadOrders(){
                 itemsHTML += `
 
                 <p>
-                ${item.name} × ${item.quantity}
+                ${item.name || "-"} × ${item.quantity || 1}
                 </p>
 
                 `;
@@ -99,37 +109,66 @@ async function loadOrders(){
         <div class="order-card">
 
 
-        <h2>
-        ${order.kot_number || "KOT"}
-        </h2>
+            <h2>
+            ${order.kot_number || "KOT"}
+            </h2>
 
 
-        <p>
-        Customer: ${order.customer_name || "-"}
-        </p>
+            <p>
+            <strong>Customer:</strong>
+            ${order.customer_name || "-"}
+            </p>
 
 
-        <p>
-        Table: ${order.table_number || "-"}
-        </p>
+            <p>
+            <strong>Table:</strong>
+            ${order.table_number || "-"}
+            </p>
 
 
-        <p>
-        Items:
-        </p>
+            <p>
+            <strong>Time:</strong>
+            ${order.created_at ? new Date(order.created_at).toLocaleTimeString() : "-"}
+            </p>
 
 
-        ${itemsHTML}
+
+            <hr>
 
 
-        <p>
-        Total: ₹${order.total || 0}
-        </p>
+            <strong>Items</strong>
+
+            ${itemsHTML || "<p>No items</p>"}
 
 
-        <p>
-        Status: ${order.status || "Pending"}
-        </p>
+
+            <p>
+            <strong>Total:</strong>
+            ₹${order.total || 0}
+            </p>
+
+
+            <p>
+            <strong>Status:</strong>
+            ${order.status || "Pending"}
+            </p>
+
+
+
+            <button onclick="updateStatus(${order.id},'Preparing')">
+            Preparing
+            </button>
+
+
+            <button onclick="updateStatus(${order.id},'Ready')">
+            Ready
+            </button>
+
+
+            <button onclick="updateStatus(${order.id},'Completed')">
+            Completed
+            </button>
+
 
 
         </div>
@@ -141,6 +180,34 @@ async function loadOrders(){
     });
 
 
+
+}
+
+
+
+// ============================
+// UPDATE STATUS
+// ============================
+
+async function updateStatus(id,status){
+
+
+    const { error } = await window.db
+        .from("kot")
+        .update({status:status})
+        .eq("id",id);
+
+
+
+    if(error){
+
+        alert(error.message);
+        return;
+
+    }
+
+
+    loadOrders();
 
 }
 
