@@ -1,27 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Kitchen Display | Chaatarra</title>
 
 <link rel="stylesheet" href="kitchen.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script src="js/supabase.js"></script>
+
 </head>
 
 <body>
 
 <header>
-<h1>🍽️ Chaatarra Kitchen</h1>
+
+<h1>🍽️ Chaatarra Kitchen Display</h1>
+
+<div class="top-bar">
+<button onclick="location.reload()">🔄 Refresh</button>
+<button onclick="toggleFullscreen()">📺 Full Screen</button>
+</div>
+
 </header>
 
 <div id="orders" class="orders"></div>
 
-<script src="kitchen.js"></script>
 <audio id="newOrderSound" preload="auto">
     <source src="sounds/new-order.mp3" type="audio/mpeg">
 </audio>
+
+<script>
+function toggleFullscreen() {
+
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+
+}
+</script>
+
+<script src="kitchen.js"></script>
+
 </body>
+
 </html>
