@@ -132,6 +132,12 @@ async function loadOrders(){
             Completed
             </button>
 
+
+            <button onclick="printKOT(${order.id})">
+            🖨️ Print KOT
+            </button>
+
+
         </div>
 
         `;
@@ -196,3 +202,140 @@ table:"kot"
 }
 )
 .subscribe();
+
+
+
+// ============================
+// PRINT KOT
+// ============================
+
+async function printKOT(id){
+
+
+    const { data, error } = await window.db
+        .from("kot")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+
+
+    if(error){
+
+        console.log(error);
+        return;
+
+    }
+
+
+
+    let itemsHTML = "";
+
+    let items = data.items || data.Items;
+
+
+
+    if(typeof items === "string"){
+
+        try{
+
+            items = JSON.parse(items);
+
+        }catch{
+
+            items = [];
+
+        }
+
+    }
+
+
+
+    if(Array.isArray(items)){
+
+        items.forEach(item=>{
+
+            itemsHTML += `
+
+            <p>
+            ${item.name || "-"} × ${item.quantity || 1}
+            </p>
+
+            `;
+
+        });
+
+    }
+
+
+
+    const printWindow = window.open(
+        "",
+        "",
+        "width=400,height=700"
+    );
+
+
+
+    printWindow.document.write(`
+
+    <html>
+
+    <body style="
+    font-family:monospace;
+    width:58mm;
+    padding:10px;
+    ">
+
+
+    <h2 style="text-align:center">
+    CHAATARRA
+    </h2>
+
+
+    <h3 style="text-align:center">
+    ${data.kot_number}
+    </h3>
+
+
+    <hr>
+
+
+    <p>
+    Customer: ${data.customer_name || "-"}
+    </p>
+
+
+    <p>
+    Table: ${data.table_number || "-"}
+    </p>
+
+
+    <hr>
+
+
+    ${itemsHTML || "No items"}
+
+
+    <hr>
+
+
+    <h3>
+    Total: ₹${data.total || 0}
+    </h3>
+
+
+    </body>
+
+    </html>
+
+    `);
+
+
+
+    printWindow.document.close();
+
+    printWindow.print();
+
+
+}
