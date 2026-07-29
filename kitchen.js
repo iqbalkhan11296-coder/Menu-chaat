@@ -1,3 +1,5 @@
+const newOrderSound = document.getElementById("newOrderSound");
+let lastOrderCount = 0;
 const ordersDiv = document.getElementById("orders");
 
 async function loadOrders() {
