@@ -1,4 +1,4 @@
-alert("Kitchen JS Connected");
+alert("DB status: " + typeof window.db);
 
 
 let newOrderSound;
