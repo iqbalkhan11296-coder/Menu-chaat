@@ -1,5 +1,3 @@
-alert("Kitchen JS Connected");
-
 let newOrderSound;
 let ordersDiv;
 
@@ -18,12 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
 // ============================
 // LOAD ORDERS
 // ============================
 
 async function loadOrders(){
-
 
     const { data, error } = await window.db
         .from("kot")
@@ -34,14 +32,14 @@ async function loadOrders(){
 
     if(error){
 
-        alert("KOT ERROR: " + error.message);
+        console.log("KOT ERROR:", error.message);
         return;
 
     }
 
 
 
-    alert("Orders found: " + data.length);
+    console.log("Orders:", data);
 
 
 
@@ -81,7 +79,7 @@ async function loadOrders(){
 
                 itemsHTML += `
                 <p>
-                ${item.name} × ${item.quantity}
+                ${item.name || "-"} × ${item.quantity || 1}
                 </p>
                 `;
 
@@ -105,11 +103,11 @@ async function loadOrders(){
             Table: ${order.table_number || "-"}
             </p>
 
-            <p>
-            Items:
-            </p>
+            <hr>
 
-            ${itemsHTML || "<p>No items</p>"}
+            ${itemsHTML || "No items"}
+
+            <hr>
 
             <p>
             Total: ₹${order.total || 0}
@@ -118,6 +116,21 @@ async function loadOrders(){
             <p>
             Status: ${order.status || "Pending"}
             </p>
+
+
+            <button onclick="updateStatus(${order.id},'Preparing')">
+            Preparing
+            </button>
+
+
+            <button onclick="updateStatus(${order.id},'Ready')">
+            Ready
+            </button>
+
+
+            <button onclick="updateStatus(${order.id},'Completed')">
+            Completed
+            </button>
 
         </div>
 
@@ -132,10 +145,37 @@ async function loadOrders(){
 
 
 // ============================
+// UPDATE STATUS
+// ============================
+
+async function updateStatus(id,status){
+
+    const { error } = await window.db
+        .from("kot")
+        .update({status})
+        .eq("id",id);
+
+
+    if(error){
+
+        console.log(error);
+        return;
+
+    }
+
+
+    loadOrders();
+
+}
+
+
+
+// ============================
 // AUTO REFRESH
 // ============================
 
 setInterval(loadOrders,3000);
+
 
 
 // ============================
