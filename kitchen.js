@@ -107,6 +107,9 @@ async function loadOrders() {
                 onclick="updateStatus(${order.id}, 'Completed')">
                 Completed
             </button>
+            <button onclick="printKOT(${order.id})">
+    🖨️ Print KOT
+</button>
 
         </div>`;
     });
@@ -161,3 +164,80 @@ window.db
         }
     )
     .subscribe();
+// ============================
+// PRINT KOT
+// ============================
+
+async function printKOT(id) {
+
+    const { data, error } = await window.db
+        .from("kot") // Change to "kots" if needed
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    let items = "";
+
+    if (Array.isArray(data.items)) {
+        data.items.forEach(item => {
+            items += `
+                <p>${item.name} × ${item.quantity}</p>
+            `;
+        });
+    }
+
+    const printWindow = window.open("", "", "width=400,height=700");
+
+    printWindow.document.write(`
+    <html>
+    <head>
+        <title>${data.kot_number}</title>
+        <style>
+            body{
+                font-family:monospace;
+                width:58mm;
+                margin:auto;
+                padding:10px;
+            }
+            h2,h3{
+                text-align:center;
+            }
+            hr{
+                border:none;
+                border-top:1px dashed #000;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h2>CHAATARRA</h2>
+        <h3>${data.kot_number}</h3>
+
+        <hr>
+
+        <p>Customer: ${data.customer_name}</p>
+        <p>Table: ${data.table_number || "-"}</p>
+        <p>Time: ${new Date(data.created_at).toLocaleString()}</p>
+
+        <hr>
+
+        ${items}
+
+        <hr>
+
+        <h3>Total: ₹${data.total}</h3>
+
+    </body>
+    </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+}
