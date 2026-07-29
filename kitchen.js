@@ -27,11 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadOrders(){
 
 
-    const { data, error } = await window.db
-        .from("kot")
-        .select("*")
-        .order("created_at", { ascending:false });
-
+    alert(JSON.stringify(data));
 
 
     if(error){
