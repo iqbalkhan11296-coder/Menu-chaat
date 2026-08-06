@@ -188,6 +188,12 @@ Proceed to Checkout
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script src="script.js"></script>
+<script>
+document.addEventListener("click", () => {
+    const music = document.getElementById("bgMusic");
+    music.play().catch(() => {});
+}, { once: true });
+</script>
 
 </body>
 </html>
