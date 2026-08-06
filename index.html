@@ -184,15 +184,21 @@ Proceed to Checkout
 </div>
 
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script src="script.js"></script>
-<script>
-<audio id="bgMusic" autoplay loop>
+
+<audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
 </audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+document.addEventListener("click", () => {
+    music.play().catch(err => console.log(err));
+}, { once: true });
+</script>
 
 </body>
 </html>
